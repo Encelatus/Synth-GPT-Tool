@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 import os
 from main import main_convert, main_prompt, main_store
 from response import Response_class
+import delete_data_pinecone
 
 obj=Response_class()
 app = Flask(__name__)
@@ -14,6 +15,19 @@ ALLOWED_EXTENSIONS = set(['pdf'])
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/clear-database', methods=['POST'])
+def clear_database():
+    print("Received request to clear the database")  # Confirms the route is accessed.
+    # Assuming you have a method to clear the database
+    try:
+        delete_data_pinecone.delete_data_pinecone()
+        print("Database cleared successfully")  # Indicates the operation was successful.
+        return jsonify({"success": True, "message": "Database cleared successfully"})
+    except Exception as e:
+        print(f"Failed to clear the database: {e}")  # Logs the exception if the operation fails.
+        return jsonify({"success": False, "message": "Could not clear the database"}), 500
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():

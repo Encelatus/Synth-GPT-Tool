@@ -91,3 +91,24 @@ document.getElementById("message-input").addEventListener("keypress", function (
     sendMessage(); // Call the sendMessage function when Enter is pressed
   }
 });
+
+document.getElementById("clear-database").addEventListener("click", function () {
+  console.log("Button clicked"); // This will confirm that the button click is being recognized.
+
+  fetch("/clear-database", { method: "POST" })
+    .then((response) => {
+      console.log("Received response from the server"); // Confirms that a response was received.
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Response parsed to JSON", data); // Shows the data received from the server.
+      if (data.success) {
+        alert("Database cleared successfully");
+      } else {
+        alert("Could not clear the database");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error); // Catches any errors in the fetch request.
+    });
+});

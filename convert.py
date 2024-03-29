@@ -22,13 +22,14 @@ class Conversion:
                 if filename.endswith('.pdf'):
                     pdf_path = os.path.join(pdf_folder, filename)
                     pdf_document = fitz.open(pdf_path)
+                    
                     print(f"Total number of pages in {pdf_path}: {pdf_document.page_count}")
 
                     # Use the dpi and zoom_factor to calculate the matrix
                     # mat = fitz.Matrix(dpi/100, dpi/100)
 
                     # for page_number in range(pdf_document.page_count - 60):
-                    for page_number in range(1):
+                    for page_number in range(pdf_document.page_count):
                         print(f"Processing page {page_number + 1} of {pdf_path}...")
                         page = pdf_document[page_number]
                         image = page.get_pixmap(matrix=fitz.Matrix(dpi/100.0, dpi/100.0))

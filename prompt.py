@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 from PIL import Image
 import base64
+import re
 
 load_dotenv()
 client=OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -25,25 +26,21 @@ def image_to_text(image_path):
                 3. Always end your response with a comma (,) mandatorily.
                 """
                 
-    prompt_2 = """You are a data analyst expert in analysis. You are good at analysing images having textual information 
-                  and graphical/textual/tabular data which is the Key aspect.
-                  
-                  I am going to provide you an image which might contain graphical data, textual data or tabular data.\
-                  You have to extract all the information with accurate figures and numbers in a proper meaningful textual format.\
-                  
+    prompt_2 = """You are a data analyst expert in analysis, proficient at analyzing images containing graphical data, textual data, or tabular data, which is the key aspect.
+    
+                  I will provide you an image that may include graphical data, textual data, or tabular data. Your task is to extract all the information with accurate figures and numbers in a proper meaningful textual format.
                   Instructions:
+
                   1. Scrape only the readable data in the image.
-                  2. If graphical or tabular data is present, convert all data found to a proper meaningful textual format.
-                  3. Mandatorily include all the analytical data found on the graphical image, if found.
-                  4. If no graphical data is found, include only textual data.
-                  5. DONT describe the background image.
-                  6. Do not include additional dialogues.
+                  2. If the text is in German, translate it to English.
+                  3. Do not summarize the text found in the image; instead, extract all the text, including every numerical figure and percentage.
+                  4. If graphical or tabular data is present, convert all data to a meaningful textual format, ensuring that all numerical figures and associated information are accurately represented.
+                  5. Include all analytical data found in the graphical image, if present, without omitting any numerical figures.
+                  6. If no graphical data is found, include only textual data, ensuring all numerical figures and percentages are accurately translated.
+                  7. Do not describe the background image.
+                  8. Avoid additional dialogues.
                   
-                  Make sure to properly extract all of text from the data and store the graphical\
-                  data's figures and numbers in a proper meaningful text with additional brief analytical analysis.
-                  Dont miss any numerical figures by any chance and associated info with it.
-                  Also, take care the page numbers and Headings. 
-                """
+                  It is crucial to properly extract all text from the data and convert the graphical data's figures and numbers into meaningful text with brief analytical analysis. Do not miss any numerical figures or associated information, and be attentive to page numbers and headings."""
    
     response = client.chat.completions.create(
         model= "gpt-4-vision-preview",
@@ -54,8 +51,7 @@ def image_to_text(image_path):
                 "content": [{
                     "type": "image_url",
                     "image_url": {
-                        "url": f"data:image/jpeg;base64,{base64_image}",
-                        "detail":"high"
+                        "url": f"data:image/jpeg;base64,{base64_image}"
                     }
                 }]
             }
@@ -66,7 +62,7 @@ def image_to_text(image_path):
     # Cleaning the response
     output = response.replace("\n", " ")
     
-    file_name= "Output/From_PDF/Text/image_text.txt"
+    file_name= "Output/From_PDF/Text/gpt_image_answer.txt"
     
     # Saving the output to a file in append mode
     with open(file_name, 'a', encoding='utf-8') as file:  # 'a' is for append mode
@@ -115,14 +111,26 @@ def image_to_text(image_path):
 #     print(f'Text has been saved to {file_name}')
 
 ##### Main for PDF #####
-def main_prompt():
-    for i in range(1):
-        image_path = f'Output/From_PDF/images/page_{i+1}.png'
-        if os.path.exists(image_path):
-            image_to_text(image_path)
-            print(f"Page {i+1} done")
-        else:
-            print(f"Page {i+1} does not exist, skipping...")
+def main_prompt(output_folder='Output/From_PDF/images'):
+    # Regex pattern to match your file naming convention (e.g., page_1.png)
+    pattern = re.compile(r'page_(\d+)\.png')
+
+    # List all files in the output directory
+    files = os.listdir(output_folder)
+
+    for file_name in files:
+        # Check if the file name matches the expected pattern
+        match = pattern.match(file_name)
+        if match:
+            page_number = match.group(1)  # Extract the page number from the file name
+            image_path = os.path.join(output_folder, file_name)
+
+            if os.path.exists(image_path):
+                image_to_text(image_path)
+                print(f"Page {page_number} done")
+            else:
+                print(f"Page {page_number} does not exist, skipping...")
+
 
 ##### Main for Excel #####   
 # xls_path = "Output/From_Excel/xls_to_json.txt"

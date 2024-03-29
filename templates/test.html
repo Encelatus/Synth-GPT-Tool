@@ -8,7 +8,6 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles.css') }}"
     />
-    <script src="{{ url_for('static', filename='js/upload_script.js') }}"></script>
   </head>
 
   <body>
@@ -25,7 +24,6 @@
       </header>
       <aside>
         <div id="document-section">
-          <div id="select-documents">Select documents</div>
           <div id="uploaded-documents">
             <p>Uploaded Documents:</p>
             <div id="file-list">
@@ -61,6 +59,9 @@
             Bestätigen
           </button>
         </div>
+        <div>
+          <button id="clear-database">Clear database</button>
+        </div>
       </aside>
       <main>
         <div id="chat-area">
@@ -71,5 +72,6 @@
         </div>
       </main>
     </div>
+    <script src="{{ url_for('static', filename='js/upload_script.js') }}"></script>
   </body>
 </html>
