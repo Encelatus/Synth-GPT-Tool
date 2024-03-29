@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thinkers AI Document Analysis</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <script src="{{ url_for('static', filename='js/upload_script.js') }}"></script>
+  </head>
+
+  <body>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+    <div id="container">
+      <header>
+        <div id="logo">Thinkers</div>
+      </header>
+      <aside>
+        <div id="document-section">
+          <div id="select-documents">Select documents</div>
+          <div id="uploaded-documents">
+            <p>Uploaded Documents:</p>
+            <div id="file-list">
+              <!-- Files will be listed here -->
+            </div>
+          </div>
+          <form
+            id="upload-form"
+            action="http://127.0.0.1:5000/upload"
+            method="post"
+            enctype="multipart/form-data"
+            style="display: none"
+          >
+            <input
+              type="file"
+              name="document"
+              id="document"
+              accept="application/pdf"
+              onchange="showConfirmButton()"
+            />
+          </form>
+          <button
+            id="upload-document"
+            onclick="document.getElementById('document').click();"
+          >
+            Upload Document
+          </button>
+          <button
+            id="confirm-upload"
+            style="display: none"
+            onclick="document.getElementById('upload-form').submit();"
+          >
+            Bestätigen
+          </button>
+        </div>
+      </aside>
+      <main>
+        <div id="chat-area">
+          <div id="title">Thinkers AI Document Analysis</div>
+          <div id="response-output"></div>
+          <input type="text" id="message-input" placeholder="Send a message" />
+          <button id="send-message" onclick="sendMessage()">Send</button>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

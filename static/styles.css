@@ -1,0 +1,82 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+#container {
+  display: flex;
+  height: 100%;
+}
+
+header {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  padding: 20px;
+  text-align: center;
+}
+
+#logo {
+  font-size: 2em;
+}
+
+aside {
+  width: 250px;
+  background-color: #34495e;
+  color: #bdc3c7;
+  padding: 20px;
+}
+
+main {
+  flex-grow: 1;
+  background-color: #ecf0f1;
+}
+
+#document-section {
+  margin-bottom: 20px;
+}
+
+#select-documents, #uploaded-documents {
+  background-color: #2c3e50;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+#chat-area {
+  padding: 20px;
+}
+
+#title {
+  font-size: 1.5em;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+#response-output {
+  border: 1px solid #bdc3c7;
+  min-height: 300px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+#message-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+}
