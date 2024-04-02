@@ -32,7 +32,7 @@ def image_to_text(image_path):
                   Instructions:
 
                   1. Scrape only the readable data in the image.
-                  2. If the text is in German, translate it to English.
+                  2. If the text is in German, save it in German.
                   3. Do not summarize the text found in the image; instead, extract all the text, including every numerical figure and percentage.
                   4. If graphical or tabular data is present, convert all data to a meaningful textual format, ensuring that all numerical figures and associated information are accurately represented.
                   5. Include all analytical data found in the graphical image, if present, without omitting any numerical figures.
@@ -118,6 +118,9 @@ def main_prompt(output_folder='Output/From_PDF/images'):
     # List all files in the output directory
     files = os.listdir(output_folder)
 
+    # Sort files by numerical order of page number
+    files.sort(key=lambda x: int(pattern.search(x).group(1)) if pattern.search(x) else 0)
+
     for file_name in files:
         # Check if the file name matches the expected pattern
         match = pattern.match(file_name)
@@ -126,7 +129,7 @@ def main_prompt(output_folder='Output/From_PDF/images'):
             image_path = os.path.join(output_folder, file_name)
 
             if os.path.exists(image_path):
-                image_to_text(image_path)
+                image_to_text(image_path)  # Assuming this function is defined elsewhere
                 print(f"Page {page_number} done")
             else:
                 print(f"Page {page_number} does not exist, skipping...")

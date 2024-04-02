@@ -1,1 +1,10 @@
 venv/
+Output/From_PDF/images/
+Output/From_PDF/images_not_used/
+Output/From_PDF/Json/
+Output/From_PDF/Json_post_prep/
+Output/From_PDF/Text/
+Output/From_PDF/unused_text/
+test_data/
+test_data_not_used/
+extracted_text.txt
