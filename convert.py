@@ -34,7 +34,7 @@ class Conversion:
                         page = pdf_document[page_number]
                         image = page.get_pixmap(matrix=fitz.Matrix(dpi/100.0, dpi/100.0))
                         rgb_image = Image.frombytes("RGB", [image.width, image.height], image.samples)
-                        image_filename = f"page_{page_number + 1}.png"
+                        image_filename = f"{filename}_page_{page_number + 1}.png"
                         image_path = os.path.join(output_folder, image_filename)
                         rgb_image.save(image_path)
                         print(f"Page {page_number + 1} saved as {image_path}")
@@ -44,32 +44,32 @@ class Conversion:
         except Exception as e:
             print(f"Error: {e}")
 
-    @classmethod        
-    def excel_to_json(cls, input_excel_file):
-        try:
-            # Read Excel file into DataFrame
-            df = pd.read_excel(input_excel_file, engine='openpyxl', skiprows=0)
-            # print("DataFrame head for inspection:", df.head())  # Debugging line
+    # @classmethod        
+    # def excel_to_json(cls, input_excel_file):
+    #     try:
+    #         # Read Excel file into DataFrame
+    #         df = pd.read_excel(input_excel_file, engine='openpyxl', skiprows=0)
+    #         # print("DataFrame head for inspection:", df.head())  # Debugging line
 
-            # Convert the DataFrame to a dictionary
-            records = df.to_dict(orient='records')
+    #         # Convert the DataFrame to a dictionary
+    #         records = df.to_dict(orient='records')
             
-            # Convert dictionary to JSON string
-            json_data = json.dumps(records, ensure_ascii=False, indent=4).replace('\/', '/').replace('\\n', ' ')
+    #         # Convert dictionary to JSON string
+    #         json_data = json.dumps(records, ensure_ascii=False, indent=4).replace('\/', '/').replace('\\n', ' ')
 
-            # Print the JSON data for inspection
-            # print(json_data)
+    #         # Print the JSON data for inspection
+    #         # print(json_data)
             
-            # Specify output file path
-            output_json_file = "Output/From_Excel/xls_to_json.txt"
+    #         # Specify output file path
+    #         output_json_file = "Output/From_Excel/xls_to_json.txt"
             
-            # Write JSON string to file
-            with open(output_json_file, 'w', encoding='utf-8') as json_file:
-                json_file.write(json_data)
+    #         # Write JSON string to file
+    #         with open(output_json_file, 'w', encoding='utf-8') as json_file:
+    #             json_file.write(json_data)
                 
-            print(f"JSON data saved to {output_json_file}")
-        except Exception as e:
-            print(f"Error: {e}")
+    #         print(f"JSON data saved to {output_json_file}")
+    #     except Exception as e:
+    #         print(f"Error: {e}")
 
 
 

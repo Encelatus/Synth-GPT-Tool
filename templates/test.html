@@ -19,9 +19,6 @@
     </ul>
     {% endif %} {% endwith %}
     <div id="container">
-      <header>
-        <div id="logo">Thinkers</div>
-      </header>
       <aside>
         <div id="document-section">
           <div id="uploaded-documents">
@@ -66,10 +63,14 @@
       <main>
         <div id="chat-area">
           <div id="title">Thinkers AI Document Analysis</div>
+          <div id="loader" class="loader" style="display: none;"></div>
           <div id="response-output"></div>
+          <button id="clear-chat" onclick="clearChat()">Clear Chat</button>
+          <p></p>
           <input type="text" id="message-input" placeholder="Send a message" />
           <button id="send-message" onclick="sendMessage()">Send</button>
         </div>
+               
       </main>
     </div>
     <script src="{{ url_for('static', filename='js/upload_script.js') }}"></script>

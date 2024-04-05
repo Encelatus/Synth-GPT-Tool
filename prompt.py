@@ -112,27 +112,19 @@ def image_to_text(image_path):
 
 ##### Main for PDF #####
 def main_prompt(output_folder='Output/From_PDF/images'):
-    # Regex pattern to match your file naming convention (e.g., page_1.png)
-    pattern = re.compile(r'page_(\d+)\.png')
-
     # List all files in the output directory
     files = os.listdir(output_folder)
 
-    # Sort files by numerical order of page number
-    files.sort(key=lambda x: int(pattern.search(x).group(1)) if pattern.search(x) else 0)
-
     for file_name in files:
-        # Check if the file name matches the expected pattern
-        match = pattern.match(file_name)
-        if match:
-            page_number = match.group(1)  # Extract the page number from the file name
+        # Check if the file is an image
+        if file_name.endswith('.png'):
             image_path = os.path.join(output_folder, file_name)
 
             if os.path.exists(image_path):
                 image_to_text(image_path)  # Assuming this function is defined elsewhere
-                print(f"Page {page_number} done")
+                print(f"{file_name} done")
             else:
-                print(f"Page {page_number} does not exist, skipping...")
+                print(f"{file_name} does not exist, skipping...")
 
 
 ##### Main for Excel #####   

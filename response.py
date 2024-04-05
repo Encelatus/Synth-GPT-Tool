@@ -23,7 +23,7 @@ class Response_class:
         # pinecone.init(api_key=os.getenv("PINECONE_API_KEY"), environment=os.getenv("PINECONE_ENVIRONMENT"))
         self.embedding=OpenAIEmbeddings()
         self.index = self.pinecone_client.Index('ihk-pdf')
-        self.llm = ChatOpenAI(model_name="gpt-4-1106-preview", temperature=0, streaming=True)
+        self.llm = ChatOpenAI(model_name="gpt-4-1106-preview", temperature=0.2, streaming=True)
         # self.client=OpenAI(organization=os.environ.get("ORGANIZATION_ID"),api_key=os.environ.get("OPENAI_API_KEY"))
 
     def find_match(self, input, key):
@@ -64,9 +64,9 @@ class Response_class:
             Try to understand the whole context in depth before concluding anything.
 
             context: {text}        
-            
-            Keep answers short and precise unless asked for details and understand the numbers carefully.
-            
+                        
+            Give a long and very detailed answer.
+
             Answer the following question: {query}
             
             Answers query asked by the user, in case of numerical data you have to do the analysis in depth 
@@ -82,6 +82,9 @@ class Response_class:
         chain = LLMChain(llm=self.llm, prompt=prompt)
         return chain
     
+    # Keep answers short and precise unless asked for details and understand the numbers carefully.
+
+
     # def main_response(self,query):
     #     prompt=f"""
     #     Role: Please act as a Data Analyst with 15 years of experience in various industries. 

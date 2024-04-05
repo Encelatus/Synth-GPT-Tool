@@ -110,5 +110,13 @@ def index():
     files = [file for file in files if file.endswith('.pdf')]  # Filter for PDF files if necessary
     return render_template('test.html', uploaded_files=files)
 
+@app.route('/pdf/<filename>')
+def serve_pdf(filename):
+    # Ensure the filename is secure to prevent directory traversal vulnerabilities.
+    safe_filename = secure_filename(filename)
+    # Serve the PDF file from the upload folder.
+    return send_from_directory(app.config['UPLOAD_FOLDER'], safe_filename)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

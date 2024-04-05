@@ -80,3 +80,50 @@ button:hover {
   border: 1px solid #bdc3c7;
   border-radius: 5px;
 }
+
+.qa-pair {
+  margin-bottom: 20px; /* Adjust the space between each Q&A pair */
+  padding: 10px;
+  border: 1px solid #ccc; /* Optional: add a border around each Q&A pair */
+  border-radius: 5px; /* Optional: round the corners of the border */
+}
+
+.question {
+  font-weight: bold;
+  margin-bottom: 5px; /* Space between question and answer */
+}
+
+.answer {
+  margin-left: 20px; /* Indent the answer for visual distinction */
+}
+
+.loader {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#clear-chat {
+  padding: 5px 10px; /* Adjusts the padding inside the button */
+  font-size: 12px; /* Adjusts the font size of the button text */
+  margin-top: 10px; /* Adds some space above the button */
+  cursor: pointer; /* Changes the mouse cursor to a pointer when hovered over the button */
+  border: 1px solid #ecf0f1; /* Adds a border around the button */
+  border-radius: 5px; /* Rounds the corners of the button */
+  background-color: #34495e; /* Sets the background color of the button */
+  color: white; /* Sets the text color of the button */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+#clear-chat:hover {
+  background-color: #2980b9; /* Darkens the button on hover for a visual effect */
+}
