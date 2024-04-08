@@ -91,7 +91,7 @@ def get_response():
     try:
         user_info = request.json
         query = user_info.get("query")
-        key = ["PDF"]  # Or whatever your key needs to be
+        key = ["PDF"]
 
         if not query:
             raise ValueError("No query provided.")
