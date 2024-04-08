@@ -1,0 +1,8 @@
+version: '3'
+services:
+  your-app-name:
+    build: .
+    ports:
+      - "5000:80"
+    env_file:
+      - .env

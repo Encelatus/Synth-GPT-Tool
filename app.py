@@ -2,6 +2,7 @@ from flask import Flask, request, redirect, flash, render_template, url_for, jso
 from werkzeug.utils import secure_filename
 import os
 from main import main_convert, main_prompt, main_store
+from pdf_to_txt import main_pdf_to_txt
 from response import Response_class
 import delete_data_pinecone
 
@@ -69,8 +70,9 @@ def process_file(filename):
     try:
         # Here you can call your processing functions
         # You might need to pass the file_path or filename to them
-        main_convert()
-        main_prompt()
+        # main_convert()
+        # main_prompt()
+        main_pdf_to_txt()
         main_store()
         # main_question()  # Uncomment if needed
         return jsonify({"success": True, "message": "File processed successfully"})
@@ -119,4 +121,4 @@ def serve_pdf(filename):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
