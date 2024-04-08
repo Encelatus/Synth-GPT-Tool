@@ -5,6 +5,9 @@ from main import main_convert, main_prompt, main_store
 from pdf_to_txt import main_pdf_to_txt
 from response import Response_class
 import delete_data_pinecone
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
 
 obj=Response_class()
 app = Flask(__name__)

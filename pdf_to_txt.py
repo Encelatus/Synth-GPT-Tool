@@ -112,6 +112,11 @@ import re
 from openai import OpenAI
 from dotenv import load_dotenv
 
+load_dotenv()
+print(os.getenv("OPENAI_API_KEY"))
+print(os.getenv("PINECONE_API_KEY"))
+print(os.getenv("PINECONE_ENVIRONMENT"))
+
 def main_pdf_to_txt():
     def preprocess_text(text):
         # Remove unnecessary characters and symbols
@@ -121,11 +126,15 @@ def main_pdf_to_txt():
         # Optional: Convert text to lowercase to maintain consistency
         text = text.lower()
         return text
-
     load_dotenv()
-
-    # Set up OpenAI API credentials
-    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+    print(os.getenv("OPENAI_API_KEY"))
+    print(os.getenv("PINECONE_API_KEY"))
+    print(os.getenv("PINECONE_ENVIRONMENT"))
+    print(os.getenv("TEST_ENV_VAR"))
+    
+    api_key = os.getenv("OPENAI_API_KEY")
+    print(f"Using API Key: {api_key}")  # Be cautious with printing sensitive keys in production
+    client = OpenAI(api_key=api_key)
 
     # Specify the folder path containing the PDF files
     folder_path = 'test_data/'  # Make sure to include the trailing slash

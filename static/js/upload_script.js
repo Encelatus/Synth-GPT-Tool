@@ -52,13 +52,13 @@ function processFile(filename) {
   console.log("PDF URL:", pdfUrl); // Log the constructed URL to check it's correct
 
   // Set the src of the iframe to the URL of the PDF
-  const pdfViewer = document.getElementById('pdf-viewer');
-  if (pdfViewer) {
-    console.log("Setting PDF Viewer src to:", pdfUrl);
-    pdfViewer.src = pdfUrl;
-  } else {
-    console.error("PDF Viewer iframe not found!");
-  }
+  // const pdfViewer = document.getElementById('pdf-viewer');
+  // if (pdfViewer) {
+  //   console.log("Setting PDF Viewer src to:", pdfUrl);
+  //   pdfViewer.src = pdfUrl;
+  // } else {
+  //   console.error("PDF Viewer iframe not found!");
+  // }
 
   // Fetch to process the file
   fetch("/process/" + encodeURIComponent(filename), { method: "POST" })
