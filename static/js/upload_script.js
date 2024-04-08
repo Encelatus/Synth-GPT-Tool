@@ -43,39 +43,6 @@ function deleteFile(filename) {
     });
 }
 
-// function processFile(filename) {
-//   fetch("/process/" + filename, { method: "POST" })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       if (data.success) {
-//         alert(data.message);
-//         // Additional actions after processing, like updating the UI
-//       } else {
-//         alert("Could not process the file: " + data.error);
-//       }
-//     });
-// }
-
-// function processFile(filename) {
-//   // Construct the URL for the PDF file
-//   const pdfUrl = `/pdf/${encodeURIComponent(filename)}`;
-
-//   // Set the src of the iframe to the URL of the PDF
-//   document.getElementById('pdf-viewer').src = pdfUrl;
-
-//   // Existing code for processing the file
-//   fetch("/process/" + encodeURIComponent(filename), { method: "POST" })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       if (data.success) {
-//         alert(data.message);
-//         // Additional actions after processing, like updating the UI
-//       } else {
-//         alert("Could not process the file: " + data.error);
-//       }
-//     });
-// }
-
 function processFile(filename) {
   // Log the filename to ensure it's being passed correctly
   console.log("Processing file:", filename);
@@ -147,64 +114,6 @@ function sendMessage() {
       console.error("Error:", error);
     });
 }
-
-// function sendMessage() {
-//   const query = document.getElementById("message-input").value;
-//   if (query.trim() === "") return; // Don't send empty messages
-
-//   // Show the loader
-//   document.getElementById("loader").style.display = "block";
-
-//   fetch("/chat", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ query: query }),
-//   })
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error(`Server responded with status ${response.status}`);
-//       }
-//       return response.json();
-//     })
-//     .then((data) => {
-//       // Hide the loader
-//       document.getElementById("loader").style.display = "none";
-
-//       console.log(data); // For debugging
-//       if (data.response) {
-//         const responseOutput = document.getElementById("response-output");
-
-//         // Create a new div for the question-answer pair
-//         const qaPairDiv = document.createElement("div");
-//         qaPairDiv.classList.add("qa-pair"); // Add class for styling
-
-//         // Create and append the question div
-//         const questionDiv = document.createElement("div");
-//         questionDiv.textContent = "Q: " + query; // Add the question text
-//         questionDiv.classList.add("question"); // Add class for styling
-//         qaPairDiv.appendChild(questionDiv);
-
-//         // Create and append the answer div
-//         const answerDiv = document.createElement("div");
-//         answerDiv.textContent = "A: " + data.response; // Add the server's response as text content
-//         answerDiv.classList.add("answer"); // Add class for styling
-//         qaPairDiv.appendChild(answerDiv);
-
-//         // Append the question-answer pair div to the response output container
-//         responseOutput.appendChild(qaPairDiv);
-//       }
-//     })
-//     .catch((error) => {
-//       // Hide the loader in case of an error as well
-//       document.getElementById("loader").style.display = "none";
-//       console.error("Error:", error);
-//     });
-// }
-
-
-
 // Add an event listener to the message input for the "Enter" key press event
 document.getElementById("message-input").addEventListener("keypress", function (e) {
   if (e.key === "Enter") {

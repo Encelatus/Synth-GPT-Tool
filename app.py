@@ -9,6 +9,7 @@ import delete_data_pinecone
 obj=Response_class()
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'test_data'
+print("UPLOAD_FOLDER: ", app.config['UPLOAD_FOLDER'])
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB upload limit
 app.secret_key = 'your_secret_key'
 
@@ -32,6 +33,7 @@ def clear_database():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    print("Uploading file...")
     if 'document' not in request.files:
         flash('No file part')
         return redirect(url_for('index'))
@@ -41,9 +43,11 @@ def upload_file():
         return redirect(url_for('index'))
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        print(f"Saving file to {file_path}...")
+        file.save(file_path)
         flash('File successfully uploaded')
-        return redirect(url_for('index'))  
+        return redirect(url_for('index'))
     else:
         flash('Allowed file types are pdf')
         return redirect(request.url)
@@ -65,18 +69,21 @@ def delete_file(filename):
     
 @app.route('/process/<filename>', methods=['POST'])
 def process_file(filename):
-    # Assuming filename validation and security checks are performed
+    print(f"Processing file: {filename}")
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    print(f"File path: {file_path}")
+    if not os.path.exists(file_path):
+        print("File does not exist.")
+        return jsonify({"success": False, "error": "File not found"}), 404
     try:
-        # Here you can call your processing functions
-        # You might need to pass the file_path or filename to them
-        # main_convert()
-        # main_prompt()
+        print("Calling main_pdf_to_txt...")
         main_pdf_to_txt()
+        print("Calling main_store...")
         main_store()
-        # main_question()  # Uncomment if needed
+        print("File processed successfully.")
         return jsonify({"success": True, "message": "File processed successfully"})
     except Exception as e:
+        print(f"Error during file processing: {e}")
         return jsonify({"success": False, "error": str(e)}), 500
     
 @app.route('/chat', methods=['POST'])
