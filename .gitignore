@@ -5,6 +5,6 @@ Output/From_PDF/Json/
 Output/From_PDF/Json_post_prep/
 Output/From_PDF/Text/
 Output/From_PDF/unused_text/
-test_data/
-test_data_not_used/
+# test_data/
+# test_data_not_used/
 extracted_text.txt
