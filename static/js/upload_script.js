@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", function () {
         fileList.appendChild(fileElement);
       });
     });
+  var actionUrl = window.location.protocol + "//" + window.location.host + "/upload";
+  document.getElementById("upload-form").action = actionUrl;
 });
 
 function deleteFile(filename) {

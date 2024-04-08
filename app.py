@@ -34,16 +34,16 @@ def clear_database():
 def upload_file():
     if 'document' not in request.files:
         flash('No file part')
-        return redirect(request.url)
+        return redirect(url_for('index'))
     file = request.files['document']
     if file.filename == '':
         flash('No selected file')
-        return redirect(request.url)
+        return redirect(url_for('index'))
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         flash('File successfully uploaded')
-        return redirect('/')
+        return redirect(url_for('index'))  
     else:
         flash('Allowed file types are pdf')
         return redirect(request.url)
