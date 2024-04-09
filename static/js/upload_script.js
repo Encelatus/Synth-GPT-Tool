@@ -44,23 +44,14 @@ function deleteFile(filename) {
 }
 
 function processFile(filename) {
-  // Log the filename to ensure it's being passed correctly
+  // Show loader
+  document.getElementById("loader").style.display = "block";
+
+  alert(filename + " submitted for processing");
   console.log("Processing file:", filename);
-
-  // Construct the URL for the PDF file
   const pdfUrl = `/pdf/${encodeURIComponent(filename)}`;
-  console.log("PDF URL:", pdfUrl); // Log the constructed URL to check it's correct
+  console.log("PDF URL:", pdfUrl);
 
-  // Set the src of the iframe to the URL of the PDF
-  // const pdfViewer = document.getElementById('pdf-viewer');
-  // if (pdfViewer) {
-  //   console.log("Setting PDF Viewer src to:", pdfUrl);
-  //   pdfViewer.src = pdfUrl;
-  // } else {
-  //   console.error("PDF Viewer iframe not found!");
-  // }
-
-  // Fetch to process the file
   fetch("/process/" + encodeURIComponent(filename), { method: "POST" })
     .then((response) => {
       if (!response.ok) {
@@ -78,15 +69,27 @@ function processFile(filename) {
       }
     }).catch((error) => {
       console.error("Fetch error:", error);
+    }).finally(() => {
+      // Hide loader
+      document.getElementById("loader").style.display = "none";
     });
 }
 
 
 
+
 // Function to send a message to the Flask backend
 function sendMessage() {
+  // Show loader
+  document.getElementById("loader").style.display = "block";
+
+  alert("Message sent"); // For debugging
   const query = document.getElementById("message-input").value;
-  if (query.trim() === "") return; // Don't send empty messages
+  if (query.trim() === "") {
+    // Hide loader if the query is empty
+    document.getElementById("loader").style.display = "none";
+    return; // Don't send empty messages
+  }
 
   fetch("/chat", {
     method: "POST",
@@ -112,36 +115,55 @@ function sendMessage() {
     })
     .catch((error) => {
       console.error("Error:", error);
+    }).finally(() => {
+      // Hide loader
+      document.getElementById("loader").style.display = "none";
     });
 }
+
 // Add an event listener to the message input for the "Enter" key press event
 document.getElementById("message-input").addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
+    alert("Message sent"); // For debugging
     e.preventDefault();
     sendMessage(); // Call the sendMessage function when Enter is pressed
   }
 });
 
 document.getElementById("clear-database").addEventListener("click", function () {
-  console.log("Button clicked"); // This will confirm that the button click is being recognized.
+  // First confirmation dialog
+  if (confirm("Are you sure you want to clear the database?")) {
+    // Second confirmation dialog with input
+    var userInput = prompt("If you want to clear the database please type 'yes' below");
+    if (userInput.toLowerCase() === 'yes') {
+      console.log("Button clicked"); // This will confirm that the button click is being recognized.
 
-  fetch("/clear-database", { method: "POST" })
-    .then((response) => {
-      console.log("Received response from the server"); // Confirms that a response was received.
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Response parsed to JSON", data); // Shows the data received from the server.
-      if (data.success) {
-        alert("Database cleared successfully");
-      } else {
-        alert("Could not clear the database");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error); // Catches any errors in the fetch request.
-    });
+      fetch("/clear-database", { method: "POST" })
+        .then((response) => {
+          console.log("Received response from the server"); // Confirms that a response was received.
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Response parsed to JSON", data); // Shows the data received from the server.
+          if (data.success) {
+            alert("Database cleared successfully");
+          } else {
+            alert("Could not clear the database");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error); // Catches any errors in the fetch request.
+        });
+    } else {
+      // User typed something other than 'yes' or pressed cancel on the second dialog
+      console.log("Database clearing aborted by the user.");
+    }
+  } else {
+    // User pressed 'No' on the first confirmation dialog
+    console.log("Database clearing aborted by the user.");
+  }
 });
+
 
 // Function to clear the chat window
 function clearChat() {

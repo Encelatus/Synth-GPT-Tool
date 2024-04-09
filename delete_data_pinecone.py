@@ -10,6 +10,7 @@ def delete_data_pinecone():
 
     pc = Pinecone(api_key=PINECONE_API_KEY)
     index = pc.Index("ihk-pdf")
+    # index = pc.Index("chat-tool")
 
     index.delete(delete_all=True, namespace='PDF')
 
