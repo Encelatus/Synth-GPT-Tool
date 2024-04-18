@@ -22,8 +22,8 @@ class Response_class:
         openai.api_key = os.environ.get("OPENAI_API_KEY")
         # pinecone.init(api_key=os.getenv("PINECONE_API_KEY"), environment=os.getenv("PINECONE_ENVIRONMENT"))
         self.embedding=OpenAIEmbeddings()
-        self.index = self.pinecone_client.Index('ihk-pdf') 
-        # self.index = self.pinecone_client.Index('chat-tool')
+        # self.index = self.pinecone_client.Index('ihk-pdf') 
+        self.index = self.pinecone_client.Index('chat-tool')
         self.llm = ChatOpenAI(model_name="gpt-4-1106-preview", temperature=0.1, streaming=True)
         # self.client=OpenAI(organization=os.environ.get("ORGANIZATION_ID"),api_key=os.environ.get("OPENAI_API_KEY"))
 

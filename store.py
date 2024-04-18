@@ -20,8 +20,8 @@ class vector_DB:
         self.PINECONE_ENV = os.getenv("PINECONE_ENVIRONMENT")
         self.pinecone_client = Pinecone(api_key=self.PINECONE_API_KEY, environment=self.PINECONE_ENV)
         self.embeddings = OpenAIEmbeddings(openai_api_key=os.environ.get("OPENAI_API_KEY"))
-        self.index_name = "ihk-pdf"
-        # self.index_name = "chat-tool"
+        # self.index_name = "ihk-pdf"
+        self.index_name = "chat-tool"
 
     def load_docs(self, directory):
         loader = DirectoryLoader(directory)
